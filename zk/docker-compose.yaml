@@ -1,0 +1,7 @@
+version: "2"
+services:
+  zookeeper:
+    restart: always
+    image: zookeeper
+    ports:
+      - '2181:2181'

@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  etcd:
+    container_name: etcd 
+    image: 'miguelgrinberg/easy-etcd:latest'
+    ports:
+      - 2379:2379 
+      - 2380:2380
+    restart: always
+  redis:
+    image: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    ports:
+      - "6379:6379"
+  mysql:
+    container_name: "mysql"
+    image: mysql:latest
+    volumes:
+      - ./mysql1:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=root
+    restart: always
+  lb:
+    container_name: haproxy-etcd 
+    image: 'miguelgrinberg/easy-lb-haproxy:latest'
+    ports:
+      - 80:80
+    restart: always
+    environment:
+      - ETCD_PEERS=http://192.168.1.30:2379
+      - HAPROXY_STATS=1

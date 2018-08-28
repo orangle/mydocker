@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  clickhouse:
+    image: 'yandex/clickhouse-server'
+    ports:
+      - '10000:9000'
+      - '8123:8123'
+    volumes:
+      - ./config.xml:/etc/clickhouse-server/config.xml
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536

@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  memcached:
+    image: 'memcached:latest'
+    ports:
+      - '11211:11211'
+    environment:
+      - MEMCACHED_CACHE_SIZE=64
